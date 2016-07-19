@@ -23,7 +23,6 @@ export function isAuthenticated() {
       if (req.query && req.query.hasOwnProperty('access_token')) {
         req.headers.authorization = 'Bearer ' + req.query.access_token;
       }
-      console.log('validte jwt');
       validateJwt(req, res, next);
     })
     // Attach user to request
@@ -32,15 +31,12 @@ export function isAuthenticated() {
       User.findById(req.user._id).exec()
         .then(user => {
           if (!user) {
-            //Do redirection in client side
             return res.status(401).end();
           }
           req.user = user;
           next();
         })
-        .catch(err => {
-          res.redirect('/login');
-        });
+        .catch(err => next(err));
     });
 }
 

@@ -55,11 +55,14 @@ describe('User API:', function() {
         });
     });
 
-    it('should respond with a 401 when not authenticated', function(done) {
+    it('should redirect to login when not authenticated', function(done) {
       request(app)
         .get('/api/users/me')
-        .expect(401)
-        .end(done);
+        .expect(302)
+        .end((err, res) => {
+          expect(res.header['location']).to.include('/login');
+          done();
+        });
     });
   });
 });
