@@ -32,16 +32,13 @@ export function isAuthenticated() {
       User.findById(req.user._id).exec()
         .then(user => {
           if (!user) {
-            console.log('redirect here');
+            //Do redirection in client side
             return res.status(401).end();
-            //return res.redirect('/login');
           }
-          console.log('user name ' + user);
           req.user = user;
           next();
         })
         .catch(err => {
-          console.log('redirect error');
           res.redirect('/login');
         });
     });
