@@ -1,40 +1,25 @@
 <div class="list-group">
-<div class="input-group list-item">
-  <span class="input-group-btn">
-    <button class="btn btn-default" type="button">
-    	<span class="glyphicon glyphicon-plus"></span>
-    </button>
-  </span>
-  <input type="text" class="form-control" placeholder="添加任务">
-</div>
-
-<div class="input-group list-item">
-  <span class="input-group-addon">
-    <input type="checkbox">
-  </span>
-  <input type="text" disabled="true" class="form-control">
-  <div class="input-group-btn">
-  	<button class="btn btn-default" type="button">
-    	<span class="glyphicon glyphicon-plus"></span>
-    </button>
-  	<button class="btn btn-default" type="button">
-    	<span class="glyphicon glyphicon-chevron-down"></span>
-    </button>
+  <div class="input-group list-item">
+    <span class="input-group-btn">
+      <button class="btn btn-default" type="button">
+      	<span class="glyphicon glyphicon-plus"></span>
+      </button>
+    </span>
+    <input ng-modal="$ctrl.todo" type="text" class="form-control" placeholder="添加任务">
   </div>
-</div><!-- /input-group -->
 
-<div class="input-group list-item">
-  <span class="input-group-addon">
-    <input type="checkbox">
-  </span>
-  <input type="text" class="form-control">
-  <div class="input-group-btn">
-  	<button class="btn btn-default" type="button">
-    	<span class="glyphicon glyphicon-plus"></span>
-    </button>
-  	<button class="btn btn-default" type="button">
-    	<span class="glyphicon glyphicon-chevron-down"></span>
-    </button>
-  </div>
-</div><!-- /input-group -->
+  <div ng-repeat="todo in $ctrl.todos" class="input-group list-item">
+    <span class="input-group-addon">
+      <input type="checkbox" ng-checked="todo.active">
+    </span>
+    <input type="text" ng-disabled="todo.active" class="form-control" value="{{todo.name}}">
+    <div class="input-group-btn">
+    	<button class="btn btn-default" type="button">
+      	<span class="glyphicon glyphicon-plus"></span>
+      </button>
+    	<button class="btn btn-default" type="button">
+      	<span class="glyphicon glyphicon-chevron-down"></span>
+      </button>
+    </div>
+  </div><!-- /input-group -->
 </div>

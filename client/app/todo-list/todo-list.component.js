@@ -4,9 +4,10 @@ angular.
   module('todoList').
   component('todoList', {
     templateUrl: 'app/todo-list/todo-list.template.html',
-    controller: [
-      function TodoListController() {
-        this.todos = [];
+    controller: ['Todo',
+      function TodoListController(Todo) {
+        this.todos = Todo.query();
+        this.todo = {};
       }
     ]
   });
