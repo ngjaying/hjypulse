@@ -88,7 +88,7 @@ export default function(app) {
     }));
   }
 
-  if ('development' === env || 'test' === env) {
-    app.use(errorHandler()); // Error handler - has to be last
-  }
+  // if ('development' === env || 'test' === env) {
+  //   app.use(errorHandler()); // Error handler - has to be last
+  // }
 }

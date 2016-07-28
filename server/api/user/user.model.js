@@ -2,6 +2,7 @@
 
 import crypto from 'crypto';
 import mongoose from 'mongoose';
+mongoose.Promise = global.Promise;
 import {Schema} from 'mongoose';
 
 const authTypes = ['github', 'twitter', 'facebook', 'google'];

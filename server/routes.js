@@ -13,14 +13,6 @@ export default function(app) {
 
   app.use('/auth', require('./auth').default);
 
-  app.use(function(err, req, res, next) {
-    if (err.name === 'UnauthorizedError') {
-      console.log('Catch UnauthorizedError' + err);
-      res.redirect('/login');
-      next(err);
-    }
-  });
-
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')
     .get(errors[404]);
@@ -30,4 +22,14 @@ export default function(app) {
     .get((req, res) => {
       res.sendFile(path.resolve(app.get('appPath') + '/index.html'));
     });
+
+  app.use(function(err, req, res, next) {
+    console.log('I am called');
+    if (err.name === 'UnauthorizedError') {
+      console.log('Catch UnauthorizedError' + err);
+      res.redirect('/login');
+      next(err);
+    }
+  });
+
 }
