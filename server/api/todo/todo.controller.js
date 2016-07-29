@@ -10,7 +10,16 @@
 'use strict';
 
 import _ from 'lodash';
+import passport from 'passport';
 import Todo from './todo.model';
+import jwt from 'jsonwebtoken';
+
+function validationError(res, statusCode) {
+  statusCode = statusCode || 422;
+  return function(err) {
+    res.status(statusCode).json(err);
+  }
+}
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -61,7 +70,8 @@ function handleError(res, statusCode) {
 
 // Gets a list of Todos
 export function index(req, res) {
-  return Todo.find().exec()
+  var userId = req.user._id;
+  return Todo.find({user: userId }).exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
@@ -76,6 +86,9 @@ export function show(req, res) {
 
 // Creates a new Todo in the DB
 export function create(req, res) {
+  let todo = req.body;
+  console.log(todo);
+  todo.user = req.user._id;
   return Todo.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));

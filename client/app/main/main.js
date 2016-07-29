@@ -4,6 +4,7 @@ angular.module('pulseApp')
   .config(function($stateProvider) {
     $stateProvider.state('main', {
       url: '/',
-      template: '<main></main>'
+      template: '<main></main>',
+      authenticate: true
     });
   });

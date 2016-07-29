@@ -2,10 +2,42 @@
 
 var app = require('../..');
 import request from 'supertest';
+import User from '../user/user.model';
 
 var newTodo;
 
 describe('Todo API:', function() {
+  let user, token;
+  before(function() {
+    return User.remove().then(function() {
+      user = new User({
+        name: 'Fake User',
+        email: 'test@example.com',
+        password: 'password'
+      });
+
+      return user.save();
+    });
+  });
+    // Clear users after testing
+  after(function() {
+    return User.remove();
+  });
+  
+  beforeEach(function(done) {
+    request(app)
+      .post('/auth/local')
+      .send({
+        email: 'test@example.com',
+        password: 'password'
+      })
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end((err, res) => {
+        token = res.body.token;
+        done();
+      });
+  });
 
   describe('GET /api/todos', function() {
     var todos;
@@ -13,6 +45,7 @@ describe('Todo API:', function() {
     beforeEach(function(done) {
       request(app)
         .get('/api/todos')
+        .set('authorization', 'Bearer ' + token)
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
@@ -38,6 +71,7 @@ describe('Todo API:', function() {
           name: 'New Todo',
           info: 'This is the brand new todo!!!'
         })
+        .set('authorization', 'Bearer ' + token)
         .expect(201)
         .expect('Content-Type', /json/)
         .end((err, res) => {
@@ -62,6 +96,7 @@ describe('Todo API:', function() {
     beforeEach(function(done) {
       request(app)
         .get('/api/todos/' + newTodo._id)
+        .set('authorization', 'Bearer ' + token)
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
@@ -94,6 +129,7 @@ describe('Todo API:', function() {
           name: 'Updated Todo',
           info: 'This is the updated todo!!!'
         })
+        .set('authorization', 'Bearer ' + token)
         .expect(200)
         .expect('Content-Type', /json/)
         .end(function(err, res) {
@@ -121,6 +157,7 @@ describe('Todo API:', function() {
     it('should respond with 204 on successful removal', function(done) {
       request(app)
         .delete('/api/todos/' + newTodo._id)
+        .set('authorization', 'Bearer ' + token)
         .expect(204)
         .end((err, res) => {
           if (err) {
@@ -133,6 +170,7 @@ describe('Todo API:', function() {
     it('should respond with 404 when todo does not exist', function(done) {
       request(app)
         .delete('/api/todos/' + newTodo._id)
+        .set('authorization', 'Bearer ' + token)
         .expect(404)
         .end((err, res) => {
           if (err) {
