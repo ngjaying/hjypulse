@@ -31,22 +31,22 @@ User.find({}).remove()
       Todo.create({
         name: 'Learn MongoDB',
         info: '<b>Schema design</b><p>Write your own idea of schema</p>',
-        active: true,
+        complete: false,
         user: userId
       }, {
         name: 'Learn Express',
         info: '<b>Express/b><ul><li>Router</li><li>Route</li><li>middleware</li></ul>',
-        active: true,
+        complete: true,
         user: userId
       }, {
         name: 'Learn AngularJS',
         info: '<h2>Angular</h2><ol><li>Twoway binding</li><li>ModuleComponents</li><li>Routing</li></ol>',
-        active: true,
+        complete: false,
         user: userId
       }, {
         name: 'Learn Node',
         info: '<p>Node js learning</p> Just do javascript',
-        active: false,
+        complete: false,
         user: userId
       })
       .then(() => {

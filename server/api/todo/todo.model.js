@@ -7,7 +7,7 @@ var Schema = mongoose.Schema,
 var TodoSchema = new mongoose.Schema({
   name: String,
   info: String,
-  active: Boolean,
+  complete: Boolean,
   user: ObjectId
 });
 

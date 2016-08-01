@@ -1,18 +1,18 @@
 <div class="list-group">
   <div class="input-group list-item">
     <span class="input-group-btn">
-      <button class="btn btn-default" type="button">
+      <button class="btn btn-default" type="button" ng-click="$ctrl.add()">
       	<span class="glyphicon glyphicon-plus"></span>
       </button>
     </span>
-    <input ng-modal="$ctrl.todo" type="text" class="form-control" placeholder="添加任务">
+    <input ng-model="$ctrl.todoInput" ng-keypress="$ctrl.add($event)" type="text" class="form-control" placeholder="添加任务">
   </div>
 
   <div ng-repeat="todo in $ctrl.todos" class="input-group list-item">
     <span class="input-group-addon">
-      <input type="checkbox" ng-checked="todo.active">
+      <input type="checkbox" ng-model="todo.complete" ng-change="$ctrl.updateStatus(todo)" />
     </span>
-    <input type="text" ng-disabled="todo.active" class="form-control" value="{{todo.name}}">
+    <input type="text" ng-disabled="todo.complete" class="form-control" ng-model="todo.name" ng-change="$ctrl.updateStatus(todo)" ng-model-options="{updateOn: 'blur'}" />
     <div class="input-group-btn">
     	<button class="btn btn-default" type="button">
       	<span class="glyphicon glyphicon-plus"></span>
