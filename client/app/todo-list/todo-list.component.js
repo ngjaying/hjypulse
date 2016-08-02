@@ -18,7 +18,7 @@ angular.
               self.todos.push(todo);
             });
           }
-        }
+        };
 
         self.updateStatus = function(t) {
           Todo.update(t);
