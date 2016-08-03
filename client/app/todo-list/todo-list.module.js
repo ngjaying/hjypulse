@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('todoList', ['todoService']);
+angular.module('todoList', ['todoService', 'angularTrix']);

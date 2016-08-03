@@ -8,18 +8,23 @@
     <input ng-model="$ctrl.todoInput" ng-keypress="$ctrl.add($event)" type="text" class="form-control" placeholder="添加任务">
   </div>
 
-  <div ng-repeat="todo in $ctrl.todos" class="input-group list-item">
-    <span class="input-group-addon">
-      <input type="checkbox" ng-model="todo.complete" ng-change="$ctrl.updateStatus(todo)" />
-    </span>
-    <input type="text" ng-disabled="todo.complete" class="form-control" ng-model="todo.name" ng-change="$ctrl.updateStatus(todo)" ng-model-options="{updateOn: 'blur'}" />
-    <div class="input-group-btn">
-    	<button class="btn btn-default" type="button">
-      	<span class="glyphicon glyphicon-plus"></span>
-      </button>
-    	<button class="btn btn-default" type="button">
-      	<span class="glyphicon glyphicon-chevron-down"></span>
-      </button>
+  <div ng-repeat="todo in $ctrl.todos" class="list-item" >
+    <div  class="input-group">
+      <span class="input-group-addon">
+        <input type="checkbox" ng-model="todo.complete" ng-change="$ctrl.updateStatus(todo)" />
+      </span>
+      <input type="text" ng-disabled="todo.complete" class="form-control" ng-model="todo.name" ng-change="$ctrl.updateStatus(todo)" ng-model-options="{updateOn: 'blur'}" />
+      <div class="input-group-btn">
+      	<button class="btn btn-default" type="button">
+        	<span class="glyphicon glyphicon-plus"></span>
+        </button>
+      	<button class="btn btn-default" type="button">
+        	<span class="glyphicon pullright" ng-click="$ctrl.isCollapsed[$index] = !$ctrl.isCollapsed[$index]" ng-class="$ctrl.isCollapsed[$index] ? 'glyphicon-chevron-right' : 'glyphicon-chevron-down'"></span>
+        </button>
+      </div>    
+    </div><!-- /input-group -->
+    <div uib-collapse="!$ctrl.isCollapsed[$index]">
+      <trix-editor angular-trix ng-model="todo.info" class="trix-content" ng-change="$ctrl.updateStatus(todo)" ng-model-options="{updateOn: 'blur'}"></trix-editor>
     </div>
-  </div><!-- /input-group -->
+  </div>
 </div>

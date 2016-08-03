@@ -8,6 +8,10 @@ angular.
       function TodoListController(Todo) {
         let self = this;
         self.todos = Todo.query();
+        self.isCollapsed = [];
+        for(let i in self.todos){
+          self.isCollapsed[i] = false;
+        }
 
         self.add = function($event) {
           if ((!$event || $event.which == 13) && self.todoInput) {
@@ -16,6 +20,7 @@ angular.
               complete: false
             }, function(todo) {
               self.todos.push(todo);
+              self.todoInput = '';
             });
           }
         };
